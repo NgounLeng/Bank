@@ -229,6 +229,7 @@ public class SignUp extends javax.swing.JFrame {
     private void btnSignUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignUpMouseClicked
         String firstName = txtFirstname.getText();
         String lastName = txtLastname.getText();
+        String middlename = "  ";
         String gender = (String)cbGender.getSelectedItem();
         String username = txtUsername.getText().toLowerCase(); //Get name from textbox and store in Variable
         String password = new String(txtPassword.getPassword()).toLowerCase();//Get password from pass-box and store in Variable
