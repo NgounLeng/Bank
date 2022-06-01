@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import main.file.check;
+import main.file.MAIN;
 import signup.SignUp;
 /**
  *
@@ -221,7 +223,14 @@ public class Login extends javax.swing.JFrame {
               ResultSet rs = pst.executeQuery();
         	//JOptionPane.showMessageDialog(null, "Login Success!"); //if we want user login success with random name and pass.
             if(rs.next()){
-                JOptionPane.showMessageDialog(null, "Login Success!");
+                
+                this.setVisible(false);
+                MAIN main = new MAIN();
+                main.pack();
+                main.setLocationRelativeTo(null);
+                main.setVisible(true);
+                
+                
             }else{
                 if(loginCount == 0){  //3 == 0 is false
                     JOptionPane.showMessageDialog(null, "Login Failed, Try Again Later!"); 
