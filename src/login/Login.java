@@ -225,7 +225,7 @@ public class Login extends javax.swing.JFrame {
             if(rs.next()){
                 
                 this.setVisible(false);
-                check main = new check();
+                MAIN main = new MAIN();
                 main.pack();
                 main.setLocationRelativeTo(null);
                 main.setVisible(true);
