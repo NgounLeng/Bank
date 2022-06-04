@@ -209,13 +209,13 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
         String username = txtUsername.getText().toLowerCase(); //Get name from textbox and store in Variable
-        String password = new String(txtPassword.getPassword()).toLowerCase();//Get password from pass-box and store in Variable
+        String password = new String(txtPassword.getPassword());//Get password from pass-box and store in Variable
         
         if(username.equals("") && password.equals("") || username.equals("") || password.equals("")){ // " || "​ => or
             JOptionPane.showMessageDialog(null, "Username Or Password Cannot Be Empty!");//null is use to make message-box at the middle of the screen
         }else
         {
-            String query = "Select * from Account Where username=? and password=?";
+            String query = "Select username, password from Account Where username=? and password=?";
             try {
               PreparedStatement pst = SQLConnection.getConnection().prepareStatement(query);
               pst.setString(1, username);
@@ -224,13 +224,15 @@ public class Login extends javax.swing.JFrame {
         	//JOptionPane.showMessageDialog(null, "Login Success!"); //if we want user login success with random name and pass.
             if(rs.next()){
                 
-                this.setVisible(false);
-                check main = new check();
-                main.pack();
-                main.setLocationRelativeTo(null);
-                main.setVisible(true);
-                
-                
+                if(rs.getString("password").equals(password)){
+                    this.setVisible(false);
+                    check main = new check();
+                    main.pack();
+                    main.setLocationRelativeTo(null);
+                    main.setVisible(true);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Login Failed, Wrong Username or Password");
+                }     
             }else{
                 if(loginCount == 0){  //3 == 0 is false
                     JOptionPane.showMessageDialog(null, "Login Failed, Try Again Later!"); 
