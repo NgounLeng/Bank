@@ -14,6 +14,10 @@ import login.Login;
 import main.file.MAIN;
 import main.file.Username;
 
+import javax.swing.JOptionPane;
+
+import login.Login;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -260,6 +264,11 @@ public class withdraw extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("COMFIRM");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -389,7 +398,15 @@ public class withdraw extends javax.swing.JFrame {
          }
     }//GEN-LAST:event_jTextField1KeyTyped
 
-    
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+
+        if(!jTextField1.getText().equals("")){
+            String[] options = {"Withdraw", "Cancel"};
+            JOptionPane.showOptionDialog(null, "Your Amount is:     " + jTextField1.getText() + "$" +"\nTHANK YOU FOR USING OUR SERVICE.","Comfirm your Activities",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+        }
+    }//GEN-LAST:event_jButton2MouseClicked
+
     /**
      * @param args the command line arguments
      */

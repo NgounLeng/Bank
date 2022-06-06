@@ -1,5 +1,6 @@
 package deposit;
 
+import javax.swing.JOptionPane;
 import login.Login;
 import main.file.MAIN;
 
@@ -255,6 +256,11 @@ public class Deposit extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("COMFIRM");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -378,6 +384,14 @@ public class Deposit extends javax.swing.JFrame {
         login.setLocationRelativeTo(null);
         login.setVisible(true);
     }//GEN-LAST:event_jLabel14MouseClicked
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        String[] options = {"Deposit", "Cancel"};
+        int x = JOptionPane.showOptionDialog(null, "Your money deposit is:  " + jTextField1.getText() + "$" + "\nTHANK YOU FOR USING OUR SERVICE.",
+                "Comfirm your Activities",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+        System.out.println(x);
+    }//GEN-LAST:event_jButton2MouseClicked
 
     /**
      * @param args the command line arguments
