@@ -6,6 +6,7 @@ package main.file;
 
 
 import connection.SQLConnection;
+import contact.contact;
 import deposit.Deposit;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 //import javax.swing.JOptionPane;
 import login.Login;
-import transaction.Transaction;
+import transaction.tblTransaction;
 import transfer.transfer;
 import withdraw.withdraw;
 
@@ -238,10 +239,22 @@ public class MAIN extends javax.swing.JFrame {
 
         jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/file/contacts12.png"))); // NOI18N
         jLabel22.setText("jLabel22");
+        jLabel22.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel22.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel22MouseClicked(evt);
+            }
+        });
 
         jLabel23.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 18)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
         jLabel23.setText("Contact");
+        jLabel23.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel23.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel23MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -509,10 +522,10 @@ public class MAIN extends javax.swing.JFrame {
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
          this.setVisible(false);
-        Transaction tran = new Transaction();
-        tran.pack();
-        tran.setLocationRelativeTo(null);
-        tran.setVisible(true);
+        tblTransaction tbltran = new tblTransaction();
+        tbltran.pack();
+        tbltran.setLocationRelativeTo(null);
+        tbltran.setVisible(true);
     }//GEN-LAST:event_jLabel7MouseClicked
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
@@ -525,10 +538,10 @@ public class MAIN extends javax.swing.JFrame {
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
         this.setVisible(false);
-        Transaction tran = new Transaction();
-        tran.pack();
-        tran.setLocationRelativeTo(null);
-        tran.setVisible(true);
+        tblTransaction tbltran = new tblTransaction();
+        tbltran.pack();
+        tbltran.setLocationRelativeTo(null);
+        tbltran.setVisible(true);
     }//GEN-LAST:event_jLabel12MouseClicked
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
@@ -546,6 +559,22 @@ public class MAIN extends javax.swing.JFrame {
         Transfer.setLocationRelativeTo(null);
         Transfer.setVisible(true);
     }//GEN-LAST:event_jLabel15MouseClicked
+
+    private void jLabel22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MouseClicked
+        this.setVisible(false);
+        contact Contact = new contact();
+        Contact.pack();
+        Contact.setLocationRelativeTo(null);
+        Contact.setVisible(true);
+    }//GEN-LAST:event_jLabel22MouseClicked
+
+    private void jLabel23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MouseClicked
+        this.setVisible(false);
+        contact Contact = new contact();
+        Contact.pack();
+        Contact.setLocationRelativeTo(null);
+        Contact.setVisible(true);
+    }//GEN-LAST:event_jLabel23MouseClicked
 
     /**
      * @param args the command line arguments
