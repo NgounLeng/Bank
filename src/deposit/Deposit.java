@@ -1,8 +1,15 @@
 package deposit;
 
+import connection.SQLConnection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import login.Login;
 import main.file.MAIN;
+import main.file.Username;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -13,13 +20,34 @@ import main.file.MAIN;
  *
  * @author johnm
  */
-public class Deposit extends javax.swing.JFrame {
 
+public class Deposit extends javax.swing.JFrame {
+    int id;
+    float balance;
     /**
      * Creates new form Deposit
      */
     public Deposit() {
         initComponents();
+        getBalance();
+    }
+    
+    private void getBalance(){
+        String query = "Select id, balance from Account where username=?";
+        try {
+            PreparedStatement pst = SQLConnection.getConnection().prepareStatement(query);
+            pst.setString(1, Username.username);
+            ResultSet rs = pst.executeQuery();
+            if(rs.next()){
+                id = Integer.parseInt(rs.getString("id"));
+                balance = Float.parseFloat(rs.getString("balance"));
+                this.Balance.setText(balance+"$");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
 
     /**
@@ -47,12 +75,10 @@ public class Deposit extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
+        Balance = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
+        Desposit = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
@@ -152,66 +178,46 @@ public class Deposit extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Your balance ");
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Your Balance ");
 
-        jLabel11.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("1,250.00$");
-
-        jButton1.setBackground(new java.awt.Color(204, 204, 204));
-        jButton1.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
-        jButton1.setText("RIEL Exchange");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jLabel12.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("5,125,000.00 RIEL");
+        Balance.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
+        Balance.setForeground(new java.awt.Color(255, 255, 255));
+        Balance.setText("0$");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap(88, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addComponent(jLabel12)))
-                .addGap(27, 27, 27))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(75, 75, 75))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(Balance)
+                        .addGap(122, 122, 122))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel12))
-                .addGap(1, 1, 1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Balance)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(0, 153, 153));
 
         jLabel13.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Your withdrawl amount");
+        jLabel13.setText("Your Withdraw Amount");
 
-        jLabel15.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("+100$");
+        Desposit.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
+        Desposit.setForeground(new java.awt.Color(255, 255, 255));
+        Desposit.setText("0$");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -220,20 +226,20 @@ public class Deposit extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
+                        .addContainerGap()
                         .addComponent(jLabel13))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(72, 72, 72)
-                        .addComponent(jLabel15)))
+                        .addGap(87, 87, 87)
+                        .addComponent(Desposit)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Desposit)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -245,10 +251,14 @@ public class Deposit extends javax.swing.JFrame {
         jTextField1.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 36)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(255, 255, 255));
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setText("100");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField1KeyTyped(evt);
             }
         });
 
@@ -292,7 +302,7 @@ public class Deposit extends javax.swing.JFrame {
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 15, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField1)
@@ -361,10 +371,6 @@ public class Deposit extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
        this.setVisible(false);
         MAIN main = new MAIN();
@@ -386,12 +392,70 @@ public class Deposit extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel14MouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        String[] options = {"Deposit", "Cancel"};
-        int x = JOptionPane.showOptionDialog(null, "Your money deposit is:  " + jTextField1.getText() + "$" + "\nTHANK YOU FOR USING OUR SERVICE.",
-                "Comfirm your Activities",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-        System.out.println(x);
+        float amount = Float.parseFloat(jTextField1.getText());
+        if(!jTextField1.getText().equals("") &&  amount > 0){
+
+            String[] options = {"Deposit", "Cancel"};
+            int x = JOptionPane.showOptionDialog(null, "Your Amount is:     " + jTextField1.getText() + "$" +"\nYour Balance is:     " + balance +"$    ","Comfirm your Activities",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+            
+            if(x == JOptionPane.OK_OPTION){
+                if(balance > 0){
+                    balance += amount;
+                    String query = "Update Account set balance=? where username=?";
+                    try{
+                        PreparedStatement pst = SQLConnection.getConnection().prepareStatement(query);
+                        pst.setFloat(1, balance);
+                        pst.setString(2, Username.username);
+                        pst.executeUpdate();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    try{
+                        String query1 = "INSERT INTO [dbo].[Transaction]([date],[accountid],[transactiontypeid],[amount]) VALUES (getdate(),?,?,?)";
+                        PreparedStatement pst1 = SQLConnection.getConnection().prepareStatement(query1);
+                        pst1.setInt(1, id);
+                        pst1.setInt(2, 1);
+                        pst1.setDouble(3, amount);
+                        pst1.executeUpdate();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    JOptionPane.showMessageDialog(null, "Deposit Successful!");
+                    this.Desposit.setText("+"+amount+" $");
+                    getBalance();
+                    this.jTextField1.setText("");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Sorry, Your account does not have sufficient balance to withdraw.");
+                }
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Error While Deposit, Please Try Again!");
+        }
     }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+        // TODO add your handling code here:
+        if(Character.isLetter(evt.getKeyChar())){
+             evt.consume();
+        }else{
+            try{
+                Double d = Double.parseDouble(jTextField1.getText() + evt.getKeyChar());
+                String[] splitter = d.toString().split("\\.");
+                if(splitter[1].length() > 2){
+                     evt.consume();
+                }
+            }catch(NumberFormatException e){
+                 evt.consume();
+             }
+        }
+    }//GEN-LAST:event_jTextField1KeyTyped
 
     /**
      * @param args the command line arguments
@@ -429,15 +493,13 @@ public class Deposit extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel Balance;
+    private javax.swing.JLabel Desposit;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

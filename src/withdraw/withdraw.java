@@ -1,16 +1,11 @@
 package withdraw;
 
 import connection.SQLConnection;
-import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.text.ParsePosition;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import login.Login;
 import main.file.MAIN;
 import main.file.Username;
 
@@ -29,22 +24,26 @@ import login.Login;
  */
 public class withdraw extends javax.swing.JFrame {
 
-    
+    int id;
     float balance;
     /**
      * Creates new form withdraw
      */
     public withdraw() {
         initComponents();
-        
-        String query = "Select balance from Account where username=?";
+        getBalance();
+    }
+    
+    private void getBalance(){
+        String query = "Select id,balance from Account where username=?";
         try {
             PreparedStatement pst = SQLConnection.getConnection().prepareStatement(query);
             pst.setString(1, Username.username);
             ResultSet rs = pst.executeQuery();
             if(rs.next()){
-                this.Balance.setText(rs.getString("balance"));
                 balance = Float.parseFloat(rs.getString("balance"));
+                id = Integer.parseInt(rs.getString("id"));
+                this.Balance.setText(balance+"$");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -81,7 +80,7 @@ public class withdraw extends javax.swing.JFrame {
         Balance = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
+        WithdrawAmount = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
@@ -183,7 +182,7 @@ public class withdraw extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Your balance ");
+        jLabel4.setText("Your Balance ");
 
         Balance.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
         Balance.setForeground(new java.awt.Color(255, 255, 255));
@@ -219,9 +218,9 @@ public class withdraw extends javax.swing.JFrame {
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Your Withdraw Amount");
 
-        jLabel15.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("0$");
+        WithdrawAmount.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
+        WithdrawAmount.setForeground(new java.awt.Color(255, 255, 255));
+        WithdrawAmount.setText("0$");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -229,7 +228,7 @@ public class withdraw extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(87, 87, 87)
-                .addComponent(jLabel15)
+                .addComponent(WithdrawAmount)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -242,7 +241,7 @@ public class withdraw extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel15)
+                .addComponent(WithdrawAmount)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -389,7 +388,7 @@ public class withdraw extends javax.swing.JFrame {
              try{
                  Double d = Double.parseDouble(jTextField1.getText() + evt.getKeyChar());
                  String[] splitter = d.toString().split("\\.");
-                 if(splitter[1].length() == 3){
+                 if(splitter[1].length() > 2){
                      evt.consume();
                  }
              }catch(NumberFormatException e){
@@ -399,11 +398,52 @@ public class withdraw extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1KeyTyped
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-
-        if(!jTextField1.getText().equals("")){
+        float amount = Float.parseFloat(jTextField1.getText());
+        if(!jTextField1.getText().equals("") && amount > 0){
+            
             String[] options = {"Withdraw", "Cancel"};
-            JOptionPane.showOptionDialog(null, "Your Amount is:     " + jTextField1.getText() + "$" +"\nTHANK YOU FOR USING OUR SERVICE.","Comfirm your Activities",
+            int x = JOptionPane.showOptionDialog(null, "Your Amount is:     " + jTextField1.getText() + "$" +"\nYour Balance is:     " + balance +"$    ","Comfirm your Activities",
             JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+            
+            if(x == JOptionPane.OK_OPTION){
+                
+                if(balance >= amount){
+                    balance -= amount;
+                    String query = "Update Account set balance=? where username=?";
+                    try{
+                        PreparedStatement pst = SQLConnection.getConnection().prepareStatement(query);
+                        pst.setFloat(1, balance);
+                        pst.setString(2, Username.username);
+                        pst.executeUpdate();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    try{
+                        String query1 = "INSERT INTO [dbo].[Transaction]([date],[accountid],[transactiontypeid],[amount]) VALUES (getdate(),?,?,?)";
+                        PreparedStatement pst1 = SQLConnection.getConnection().prepareStatement(query1);
+                        pst1.setInt(1, id);
+                        pst1.setInt(2, 2);
+                        pst1.setDouble(3, amount);
+                        pst1.executeUpdate();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    JOptionPane.showMessageDialog(null, "Withdraw Successful!");
+                    this.WithdrawAmount.setText("-"+amount+" $");
+                    getBalance();
+                    this.jTextField1.setText("");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Sorry, Your account does not have sufficient balance to withdraw.");
+                }
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Please input withdraw amount!");
         }
     }//GEN-LAST:event_jButton2MouseClicked
 
@@ -451,12 +491,12 @@ public class withdraw extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Balance;
+    private javax.swing.JLabel WithdrawAmount;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 //import javax.swing.JOptionPane;
 import login.Login;
-import transaction.tblTransaction;
+import transaction.Transactions;
 import transfer.transfer;
 import withdraw.withdraw;
 
@@ -522,7 +522,7 @@ public class MAIN extends javax.swing.JFrame {
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
          this.setVisible(false);
-        tblTransaction tbltran = new tblTransaction();
+        Transactions tbltran = new Transactions();
         tbltran.pack();
         tbltran.setLocationRelativeTo(null);
         tbltran.setVisible(true);
@@ -538,7 +538,7 @@ public class MAIN extends javax.swing.JFrame {
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
         this.setVisible(false);
-        tblTransaction tbltran = new tblTransaction();
+        Transactions tbltran = new Transactions();
         tbltran.pack();
         tbltran.setLocationRelativeTo(null);
         tbltran.setVisible(true);
