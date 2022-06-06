@@ -1,8 +1,15 @@
 package transfer;
 
+import connection.SQLConnection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import login.Login;
 import main.file.MAIN;
+import main.file.Username;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -18,10 +25,46 @@ public class transfer extends javax.swing.JFrame {
     /**
      * Creates new form transfer
      */
+    String accountnumber;
     public transfer() {
         initComponents();
+        String query = "Select firstname + ' ' + lastname fullname, accountnumber, balance from Account where username=?";
+        try {
+            PreparedStatement pst = SQLConnection.getConnection().prepareStatement(query);
+            pst.setString(1, Username.username);
+            ResultSet rs = pst.executeQuery();
+            if(rs.next()){
+                String accountNumber = rs.getString("accountnumber");
+                String accountNumberStr = "";
+                char[] ch = AccountNumber(accountNumber);
+                for(int i = 0; i < ch.length; i++){
+                    accountNumberStr += ch[i];
+                    if(i == 2){
+                        accountNumberStr += " ";
+                    }else if(i == 5){
+                        accountNumberStr += " ";
+                    }
+                    
+                }
+               accountnumber = accountNumberStr;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    
     }
-
+private char[] AccountNumber(String accountNumber){
+        char[] ch = new char[accountNumber.length()];
+        
+        // Copying character by character into array
+        // using for each loop
+        for (int i = 0; i < accountNumber.length(); i++) {
+            ch[i] = accountNumber.charAt(i);
+        }
+        return ch;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -361,7 +404,7 @@ public class transfer extends javax.swing.JFrame {
          String[] options = {"Send", "Cancel"};
         int x = JOptionPane.showOptionDialog(null, "Amount you transfer is:     " 
                 + jTextField2.getText()+ "$"
-                //+ AccountNumber.getText()
+                + "\nTransfer Account is:      " + accountnumber 
                 + "\nReceiver Account is:      " + jTextField1.getText()
                 + "\nTHANK YOU FOR USING OUR SERVICE.",
                 "Comfirm your Activities",
