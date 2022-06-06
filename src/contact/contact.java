@@ -4,6 +4,9 @@
  */
 package contact;
 
+import login.Login;
+import main.file.MAIN;
+
 /**
  *
  * @author johnm
@@ -81,7 +84,7 @@ public class contact extends javax.swing.JFrame {
             }
         });
 
-        jPanel4.setBackground(new java.awt.Color(51, 153, 0));
+        jPanel4.setBackground(new java.awt.Color(0, 153, 153));
         jPanel4.setForeground(new java.awt.Color(255, 153, 51));
 
         jLabel5.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 24)); // NOI18N
