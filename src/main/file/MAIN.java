@@ -239,7 +239,7 @@ public class MAIN extends javax.swing.JFrame {
                     .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)))
         );
 
-        jPanel8.setBackground(new java.awt.Color(255, 51, 51));
+        jPanel8.setBackground(new java.awt.Color(255, 102, 102));
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/withdrawal.png"))); // NOI18N
         jLabel16.setText("jLabel16");
