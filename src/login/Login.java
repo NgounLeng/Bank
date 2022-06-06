@@ -226,7 +226,7 @@ public class Login extends javax.swing.JFrame {
                 
                 if(rs.getString("password").equals(password)){
                     this.setVisible(false);
-                    MAIN main = new MAIN();
+                    check main = new check ();
                     main.pack();
                     main.setLocationRelativeTo(null);
                     main.setVisible(true);
