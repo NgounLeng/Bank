@@ -4,6 +4,9 @@
  */
 package transaction;
 
+import login.Login;
+import main.file.MAIN;
+
 /**
  *
  * @author johnm
