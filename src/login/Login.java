@@ -11,8 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import main.file.check;
 import main.file.MAIN;
+import main.file.Username;
 import signup.SignUp;
 /**
  *
@@ -211,6 +211,8 @@ public class Login extends javax.swing.JFrame {
         String username = txtUsername.getText().toLowerCase(); //Get name from textbox and store in Variable
         String password = new String(txtPassword.getPassword());//Get password from pass-box and store in Variable
         
+        Username.username = username;
+        
         if(username.equals("") && password.equals("") || username.equals("") || password.equals("")){ // " || "​ => or
             JOptionPane.showMessageDialog(null, "Username Or Password Cannot Be Empty!");//null is use to make message-box at the middle of the screen
         }else
@@ -225,11 +227,11 @@ public class Login extends javax.swing.JFrame {
             if(rs.next()){
                 
                 if(rs.getString("password").equals(password)){
-                    this.setVisible(false);
                     MAIN main = new MAIN();
                     main.pack();
                     main.setLocationRelativeTo(null);
                     main.setVisible(true);
+                    dispose();
                 }else{
                     JOptionPane.showMessageDialog(null, "Login Failed, Wrong Username or Password");
                 }     
