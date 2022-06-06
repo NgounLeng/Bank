@@ -359,7 +359,10 @@ public class transfer extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
          String[] options = {"Send", "Cancel"};
-        int x = JOptionPane.showOptionDialog(null, "Please make sure your information is correctly,"
+        int x = JOptionPane.showOptionDialog(null, "Amount you transfer is:     " 
+                + jTextField2.getText()+ "$"
+                //+ AccountNumber.getText()
+                + "\nReceiver Account is:      " + jTextField1.getText()
                 + "\nTHANK YOU FOR USING OUR SERVICE.",
                 "Comfirm your Activities",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);

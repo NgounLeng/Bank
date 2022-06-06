@@ -385,8 +385,7 @@ public class withdraw extends javax.swing.JFrame {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         String[] options = {"Withdrawl", "Cancel"};
-        int x = JOptionPane.showOptionDialog(null, "Please make sure your amount is correctly,"
-                + "\nTHANK YOU FOR USING OUR SERVICE.",
+        int x = JOptionPane.showOptionDialog(null, "Your Amount is:     " + jTextField1.getText() + "$" +"\nTHANK YOU FOR USING OUR SERVICE.",
                 "Comfirm your Activities",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
         System.out.println(x);
