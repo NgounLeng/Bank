@@ -4,7 +4,13 @@
  */
 package main.file;
 
+
+import deposit.Deposit;
 import login.Login;
+import transaction.Transaction;
+import transfer.transfer;
+import withdraw.Withdraw;
+
 
 /**
  *
@@ -76,14 +82,14 @@ public class MAIN extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addComponent(jLabel1))
         );
 
@@ -110,12 +116,30 @@ public class MAIN extends javax.swing.JFrame {
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/cash-withdrawal.png"))); // NOI18N
         jLabel5.setText("jLabel5");
+        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/deposit.png"))); // NOI18N
         jLabel6.setText("jLabel6");
+        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/transaction (1).png"))); // NOI18N
         jLabel7.setText("jLabel7");
+        jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/wallet12.png"))); // NOI18N
         jLabel8.setText("jLabel8");
@@ -139,21 +163,51 @@ public class MAIN extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Withdraw");
+        jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Deposit");
+        jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel11MouseClicked(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 17)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Transaction");
+        jLabel12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel12MouseClicked(evt);
+            }
+        });
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/data-transfer.png"))); // NOI18N
         jLabel13.setText("jLabel13");
+        jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel13MouseClicked(evt);
+            }
+        });
 
         jLabel15.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("Transfer");
+        jLabel15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel15MouseClicked(evt);
+            }
+        });
 
         jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/file/contacts12.png"))); // NOI18N
         jLabel22.setText("jLabel22");
@@ -388,6 +442,70 @@ public class MAIN extends javax.swing.JFrame {
         login.setLocationRelativeTo(null);
         login.setVisible(true);
     }//GEN-LAST:event_jLabel14MouseClicked
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+       this.setVisible(false);
+        Withdraw Withdraw = new Withdraw();
+        Withdraw.pack();
+        Withdraw.setLocationRelativeTo(null);
+        Withdraw.setVisible(true);
+    }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+       this.setVisible(false);
+        Withdraw Withdraw = new Withdraw();
+        Withdraw.pack();
+        Withdraw.setLocationRelativeTo(null);
+        Withdraw.setVisible(true);
+    }//GEN-LAST:event_jLabel10MouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        this.setVisible(false);
+        Deposit deposit = new Deposit();
+        deposit.pack();
+        deposit.setLocationRelativeTo(null);
+        deposit.setVisible(true);
+    }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+         this.setVisible(false);
+        Transaction tran = new Transaction();
+        tran.pack();
+        tran.setLocationRelativeTo(null);
+        tran.setVisible(true);
+    }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+        this.setVisible(false);
+        Deposit tran = new Deposit();
+        tran.pack();
+        tran.setLocationRelativeTo(null);
+        tran.setVisible(true);
+    }//GEN-LAST:event_jLabel11MouseClicked
+
+    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
+        this.setVisible(false);
+        Transaction tran = new Transaction();
+        tran.pack();
+        tran.setLocationRelativeTo(null);
+        tran.setVisible(true);
+    }//GEN-LAST:event_jLabel12MouseClicked
+
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+        this.setVisible(false);
+        transfer Transfer = new transfer();
+        Transfer.pack();
+        Transfer.setLocationRelativeTo(null);
+        Transfer.setVisible(true);
+    }//GEN-LAST:event_jLabel13MouseClicked
+
+    private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
+       this.setVisible(false);
+        transfer Transfer = new transfer();
+        Transfer.pack();
+        Transfer.setLocationRelativeTo(null);
+        Transfer.setVisible(true);
+    }//GEN-LAST:event_jLabel15MouseClicked
 
     /**
      * @param args the command line arguments
