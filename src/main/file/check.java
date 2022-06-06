@@ -21,6 +21,7 @@ public class check extends javax.swing.JFrame {
     /**
      * Creates new form check
      */
+    
     public check() {
         initComponents();
         String query = "Select firstname + ' ' + lastname fullname, accountnumber, balance from Account where username=?";
