@@ -26,16 +26,28 @@ public class transfer extends javax.swing.JFrame {
      * Creates new form transfer
      */
     String accountnumber;
+    float balance;
+    String fullname;
+    int id;
     public transfer() {
         initComponents();
-        String query = "Select firstname + ' ' + lastname fullname, accountnumber, balance from Account where username=?";
+       
+        jTextField1.getCaret().setVisible(false);
+        
+        String query = "Select id, firstname + ' ' + lastname fullname,accountnumber, balance from Account where username=?";
         try {
             PreparedStatement pst = SQLConnection.getConnection().prepareStatement(query);
             pst.setString(1, Username.username);
             ResultSet rs = pst.executeQuery();
             if(rs.next()){
+                fullname = rs.getString("fullname");
+                balance = Float.parseFloat(rs.getString("balance"));
+                id = Integer.parseInt(rs.getString("id")); 
+                this.BalanceUS.setText(balance + " $");
+                this.BalanceKH.setText((balance * 4100) + " REIL");
                 String accountNumber = rs.getString("accountnumber");
                 String accountNumberStr = "";
+                
                 char[] ch = AccountNumber(accountNumber);
                 for(int i = 0; i < ch.length; i++){
                     accountNumberStr += ch[i];
@@ -44,7 +56,6 @@ public class transfer extends javax.swing.JFrame {
                     }else if(i == 5){
                         accountNumberStr += " ";
                     }
-                    
                 }
                accountnumber = accountNumberStr;
             }
@@ -55,7 +66,7 @@ public class transfer extends javax.swing.JFrame {
         } 
     
     }
-private char[] AccountNumber(String accountNumber){
+    private char[] AccountNumber(String accountNumber){
         char[] ch = new char[accountNumber.length()];
         
         // Copying character by character into array
@@ -90,8 +101,8 @@ private char[] AccountNumber(String accountNumber){
         jLabel9 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        BalanceUS = new javax.swing.JLabel();
+        BalanceKH = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -197,13 +208,13 @@ private char[] AccountNumber(String accountNumber){
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("AVAILABLE BALANCE");
 
-        jLabel11.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 18)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("1,250.00$");
+        BalanceUS.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 18)); // NOI18N
+        BalanceUS.setForeground(new java.awt.Color(255, 255, 255));
+        BalanceUS.setText("1,250.00$");
 
-        jLabel12.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("5,125,000.00 RIEL");
+        BalanceKH.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
+        BalanceKH.setForeground(new java.awt.Color(255, 255, 255));
+        BalanceKH.setText("5,125,000.00 RIEL");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -211,15 +222,14 @@ private char[] AccountNumber(String accountNumber){
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(188, 188, 188))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(160, 160, 160))))
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(160, 160, 160))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(182, 182, 182)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(BalanceKH)
+                    .addComponent(BalanceUS))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,9 +237,10 @@ private char[] AccountNumber(String accountNumber){
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel11)
+                .addComponent(BalanceUS)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel12))
+                .addComponent(BalanceKH)
+                .addContainerGap())
         );
 
         jLabel13.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
@@ -265,10 +276,20 @@ private char[] AccountNumber(String accountNumber){
         jTextField1.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 18)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(255, 255, 255));
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setText("001 245 321");
+        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField1FocusLost(evt);
+            }
+        });
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField1KeyTyped(evt);
             }
         });
 
@@ -276,7 +297,11 @@ private char[] AccountNumber(String accountNumber){
         jTextField2.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 18)); // NOI18N
         jTextField2.setForeground(new java.awt.Color(255, 255, 255));
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField2.setText("200");
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField2KeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -298,7 +323,7 @@ private char[] AccountNumber(String accountNumber){
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 18, Short.MAX_VALUE))
+                .addGap(0, 20, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField1)
@@ -341,7 +366,7 @@ private char[] AccountNumber(String accountNumber){
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -401,17 +426,141 @@ private char[] AccountNumber(String accountNumber){
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-         String[] options = {"Send", "Cancel"};
-        int x = JOptionPane.showOptionDialog(null, "Amount you transfer is:     " 
-                + jTextField2.getText()+ "$"
-                + "\nTransfer Account is:      " + accountnumber 
-                + "\nReceiver Account is:      " + jTextField1.getText()
-                + "\nTHANK YOU FOR USING OUR SERVICE.",
-                "Comfirm your Activities",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-        System.out.println(x);
-         
+        //JOptionPane.showMessageDialog(null, jTextField1.getText().replaceAll(" ", "") + " " + accountnumber);
+        if(jTextField1.getText().equals(accountnumber)){
+            JOptionPane.showMessageDialog(null, "Sorry, Cannot transfer to your own account.");
+        }else{
+            String query = "Select id, firstname + ' ' + lastname fullname from Account where accountnumber=?";
+            try {
+                PreparedStatement pst = SQLConnection.getConnection().prepareStatement(query);
+                pst.setString(1, jTextField1.getText().replaceAll(" ", ""));
+                ResultSet rs = pst.executeQuery();
+                if(rs.next()){
+                    
+                    float transferAmount = Float.parseFloat(jTextField2.getText());
+                    
+                    if(balance>=transferAmount){
+                        
+                        String recieverAccountNumber = jTextField1.getText().replaceAll(" ", "");
+                        
+                        String[] options = {"Send", "Cancel"};
+                        int x = JOptionPane.showOptionDialog(null, "Amount you transfer is:     " 
+                        + jTextField2.getText()+ "$"
+                        + "\nTransfer Account is:      " + accountnumber + " (" + fullname +")" 
+                        + "\nReceiver Account is:      " + jTextField1.getText() + " (" + rs.getString("fullname") + ")" 
+                        + "\nTHANK YOU FOR USING OUR SERVICE.",
+                        "Comfirm your Activities",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+                        
+                        if(x == JOptionPane.OK_OPTION){
+                            try {
+                                //Update Current Login Account Balance
+                                String query1 = "UPDATE Account SET balance = ? where accountnumber = ?";
+                                balance = balance - transferAmount; 
+                                PreparedStatement pst1 = SQLConnection.getConnection().prepareStatement(query1);
+                                pst1.setFloat(1, balance);
+                                pst1.setString(2, accountnumber.replaceAll(" ", ""));
+                                pst1.executeUpdate();
+                                
+                                //Update Receiver Account Balance
+                                String query2 = "UPDATE Account SET balance = balance + ? where accountnumber = ?";
+                                PreparedStatement pst2 = SQLConnection.getConnection().prepareStatement(query2);
+                                pst2.setFloat(1, transferAmount);
+                                pst2.setString(2, recieverAccountNumber);
+                                pst2.executeUpdate();
+                                
+                                //Add Transaction Transfer ACC
+                                
+                                String query3 = "INSERT INTO [dbo].[Transaction]([date],[accountid],[transactiontypeid],transfername,receivername,[amount]) VALUES (getdate(),?,?,?,?,?)";
+                                PreparedStatement pst3 = SQLConnection.getConnection().prepareStatement(query3);
+                                pst3.setInt(1, id);
+                                pst3.setInt(2, 3);
+                                pst3.setString(3, fullname);
+                                pst3.setString(4, rs.getString("fullname"));
+                                pst3.setFloat(5, transferAmount);
+                                pst3.executeUpdate();
+                                
+                                //Add Transaction Receiver ACC
+                                
+                                String query4 = "INSERT INTO [dbo].[Transaction]([date],[accountid],[transactiontypeid],transfername,receivername,[amount]) VALUES (getdate(),?,?,?,?,?)";
+                                PreparedStatement pst4 = SQLConnection.getConnection().prepareStatement(query4);
+                                pst4.setInt(1, Integer.parseInt(rs.getString("id")));
+                                pst4.setInt(2, 4);
+                                pst4.setString(3, fullname);
+                                pst4.setString(4, rs.getString("fullname"));
+                                pst4.setFloat(5, transferAmount);
+                                pst4.executeUpdate();
+                                
+                                this.BalanceUS.setText(balance + " $");
+                                this.BalanceKH.setText((balance * 4100) + " REIL");
+                                JOptionPane.showMessageDialog(null, "Transfer Successful!");
+                            } catch (SQLException ex) {
+                                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (ClassNotFoundException ex) {
+                                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Sorry, Your account does not have sufficient balance to transfer.");
+                    } 
+                }else{
+                    JOptionPane.showMessageDialog(null, "Unable to Find Receiver Account. Please Check Receiver Account Number And Try Again!");
+                }  
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        }   
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
+        // TODO add your handling code here:
+        try{
+            Double d = Double.parseDouble(jTextField2.getText() + evt.getKeyChar());
+            String[] splitter = d.toString().split("\\.");
+            if(splitter[1].length() > 2){
+                evt.consume();
+            }
+        }catch(NumberFormatException e){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextField2KeyTyped
+
+    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }
+        if(jTextField1.getText().length() < 11){
+            if(jTextField1.getText().length() == 3){
+                jTextField1.setText(jTextField1.getText() + " ");
+            }else if(jTextField1.getText().length() == 7){
+                jTextField1.setText(jTextField1.getText() + " ");
+            }
+        }else{
+            evt.consume();
+        }
+
+    }//GEN-LAST:event_jTextField1KeyTyped
+
+    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+        // TODO add your handling code here:
+        String accountNumber = jTextField1.getText().replaceAll(" ", "");
+        String accountNumberStr = "";
+        char[] ch = AccountNumber(accountNumber);
+            for(int i = 0; i < ch.length; i++){
+                accountNumberStr += ch[i];
+                if(i == 2){
+                    accountNumberStr += " ";
+                }else if(i == 5){
+                    accountNumberStr += " ";
+                }
+            }
+        jTextField1.setText(accountNumberStr);
+    }//GEN-LAST:event_jTextField1FocusLost
 
     /**
      * @param args the command line arguments
@@ -449,11 +598,11 @@ private char[] AccountNumber(String accountNumber){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel BalanceKH;
+    private javax.swing.JLabel BalanceUS;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;

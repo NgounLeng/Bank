@@ -1,14 +1,11 @@
 package transaction;
 
 import connection.SQLConnection;
-import java.beans.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -39,7 +36,7 @@ public class Transactions extends javax.swing.JFrame {
     }
     
     private void getData(){
-       String query = "Select [Transaction].id Id ,[Transaction].date Date,Account.firstname + ' ' + Account.lastname Fullname, TransactionType.name Type , [Transaction].amount Amount from [Transaction] LEFT JOIN Account ON [Transaction].accountid = Account.id LEFT JOIN TransactionType On [Transaction].transactiontypeid = TransactionType.id where Account.username = ?";
+       String query = "Select [Transaction].date Date, TransactionType.name Type ,transfername TransferName, receivername ReceiverName, [Transaction].amount Amount from [Transaction] LEFT JOIN Account ON [Transaction].accountid = Account.id LEFT JOIN TransactionType On [Transaction].transactiontypeid = TransactionType.id where Account.username = ?";
        try {
             PreparedStatement pst = SQLConnection.getConnection().prepareStatement(query);
             pst.setString(1, Username.username);
@@ -194,11 +191,11 @@ public class Transactions extends javax.swing.JFrame {
 
             },
             new String [] {
-                "No", "Date", "Account Name", "Type", "Amount"
+                "Date", "Type", "Transfer Name", "Receiver Name", "Amount"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

@@ -422,11 +422,13 @@ public class withdraw extends javax.swing.JFrame {
                     }
                     
                     try{
-                        String query1 = "INSERT INTO [dbo].[Transaction]([date],[accountid],[transactiontypeid],[amount]) VALUES (getdate(),?,?,?)";
+                        String query1 = "INSERT INTO [dbo].[Transaction]([date],[accountid],[transactiontypeid],transfername,receivername,[amount]) VALUES (getdate(),?,?,?,?,?)";
                         PreparedStatement pst1 = SQLConnection.getConnection().prepareStatement(query1);
                         pst1.setInt(1, id);
                         pst1.setInt(2, 2);
-                        pst1.setDouble(3, amount);
+                        pst1.setString(3, null);
+                        pst1.setString(4, null);
+                        pst1.setDouble(5, amount);
                         pst1.executeUpdate();
                     } catch (SQLException ex) {
                         Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
