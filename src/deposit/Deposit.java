@@ -24,6 +24,7 @@ import main.file.Username;
 public class Deposit extends javax.swing.JFrame {
     int id;
     float balance;
+    String fullname;
     /**
      * Creates new form Deposit
      */
@@ -33,12 +34,13 @@ public class Deposit extends javax.swing.JFrame {
     }
     
     private void getBalance(){
-        String query = "Select id, balance from Account where username=?";
+        String query = "Select id, firstname + ' ' + lastname fullname , balance from Account where username=?";
         try {
             PreparedStatement pst = SQLConnection.getConnection().prepareStatement(query);
             pst.setString(1, Username.username);
             ResultSet rs = pst.executeQuery();
             if(rs.next()){
+                fullname = rs.getString("fullname");
                 id = Integer.parseInt(rs.getString("id"));
                 balance = Float.parseFloat(rs.getString("balance"));
                 this.Balance.setText(balance+"$");
@@ -400,7 +402,7 @@ public class Deposit extends javax.swing.JFrame {
             JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
             
             if(x == JOptionPane.OK_OPTION){
-                if(balance > 0){
+                if(balance >= 0){
                     balance += amount;
                     String query = "Update Account set balance=? where username=?";
                     try{
@@ -415,11 +417,13 @@ public class Deposit extends javax.swing.JFrame {
                     }
                     
                     try{
-                        String query1 = "INSERT INTO [dbo].[Transaction]([date],[accountid],[transactiontypeid],[amount]) VALUES (getdate(),?,?,?)";
+                        String query1 = "INSERT INTO [dbo].[Transaction]([date],[accountid],[transactiontypeid],transfername,receivername,[amount]) VALUES (getdate(),?,?,?,?,?)";
                         PreparedStatement pst1 = SQLConnection.getConnection().prepareStatement(query1);
                         pst1.setInt(1, id);
                         pst1.setInt(2, 1);
-                        pst1.setDouble(3, amount);
+                        pst1.setString(3, null);
+                        pst1.setString(4, null);
+                        pst1.setDouble(5, amount);
                         pst1.executeUpdate();
                     } catch (SQLException ex) {
                         Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -453,7 +457,7 @@ public class Deposit extends javax.swing.JFrame {
                 }
             }catch(NumberFormatException e){
                  evt.consume();
-             }
+            }
         }
     }//GEN-LAST:event_jTextField1KeyTyped
 
